@@ -4,12 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "produto") // nomeia uma tabela
@@ -29,18 +33,22 @@ public class Produto {
 	
 	@NotNull
 	@Size(min = 5, max = 200)
-	private String imgCaminho;
+	private String imgProduto;
 	
 	@NotNull
 	@NumberFormat(style = Style.CURRENCY)
 	private double preco;
 	
 	@NotNull
-	@Size(min = 1, max = 5)
+	@Range(min = 0, max = 200)
 	private int qtdProduto;
 	
 	@NotNull
 	private boolean disponivel;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produto") // <- quando chegar em produto finaliza a query
+	private Categoria categoria;
 	
 	public long getId() {
 		return id;
@@ -66,12 +74,12 @@ public class Produto {
 		this.descricao = descricao;
 	}
 	
-	public String getImgCaminho() {
-		return imgCaminho;
+	public String getImgProduto() {
+		return imgProduto;
 	}
 	
-	public void setImgCaminho(String imgCaminho) {
-		this.imgCaminho = imgCaminho;
+	public void setImgProduto(String imgProduto) {
+		this.imgProduto = imgProduto;
 	}
 	
 	public double getPreco() {
@@ -96,6 +104,14 @@ public class Produto {
 	
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 }

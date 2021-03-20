@@ -14,6 +14,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 	// consulta os produtos por suas descricoes que contem os caracteres informados pelo usuario
 	public List<Produto> findAllByDescricaoContainingIgnoreCase (String descricao);
 
-	// consulta os produtos por seu preco
-	//public List<Produto> findAllByPrecoContainingIgnoreCase (double preco);
 }
